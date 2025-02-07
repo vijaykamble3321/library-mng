@@ -18,29 +18,29 @@ bookuserRouter.post("/singlebuy", authmiddleware, singlebookbuyController);
 bookuserRouter.post("/cart", authmiddleware, addToCartController);
 bookuserRouter.post("/buyall", authmiddleware, checkoutController); //buy
 bookuserRouter.delete("/deletecart", authmiddleware, deletecartController);
-bookuserRouter.get("/detail", authmiddleware, detailController);
+// bookuserRouter.get("/detail", authmiddleware, detailController);
 
 export default bookuserRouter;
 
 //detail
 
-async function detailController(req, res) {
-  try {
-    const { email } = res.locals;
+// async function detailController(req, res) {
+//   try {
+//     const { email } = res.locals;
 
-    const user = await userModel.findOne({ email });
-    if (!user) return errorResponse(res, 404, "User not found.");
+//     const user = await userModel.findOne({ email });
+//     if (!user) return errorResponse(res, 404, "User not found.");
 
-    const userId = user._id;
+//     const userId = user._id;
 
-    // Count total borrowed books
-    const totalBorrowed = await borrowModel.countDocuments({ userId });
+//     // Count total borrowed books
+//     const totalBorrowed = await borrowModel.countDocuments({ userId });
 
-    //  Count total returned books
-    const totalReturned = await borrowModel.countDocuments({
-      userId,
-      returned: true,
-    });
+//     //  Count total returned books
+//     const totalReturned = await borrowModel.countDocuments({
+//       userId,
+//       returned: true,
+//     });
 
     //  Get currently borrowed books (not returned)
     const currentBorrowed = await borrowModel
