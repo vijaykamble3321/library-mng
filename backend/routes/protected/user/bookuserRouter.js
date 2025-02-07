@@ -43,20 +43,20 @@ export default bookuserRouter;
 //     });
 
     //  Get currently borrowed books (not returned)
-    const currentBorrowed = await borrowModel
-      .find({ userId, returned: false })
-      .populate("bookId", "title author"); // Fetch book details (title & author)
+//     const currentBorrowed = await borrowModel
+//       .find({ userId, returned: false })
+//       .populate("bookId", "title author"); // Fetch book details (title & author)
 
-    return successResponse(res, "User borrow details fetched successfully.", {
-      totalBorrowed,
-      totalReturned,
-      currentBorrowed,
-    });
-  } catch (error) {
-    console.error("Error fetching borrow details:", error);
-    return errorResponse(res, 500, "Internal server error.");
-  }
-}
+//     return successResponse(res, "User borrow details fetched successfully.", {
+//       totalBorrowed,
+//       totalReturned,
+//       currentBorrowed,
+//     });
+//   } catch (error) {
+//     console.error("Error fetching borrow details:", error);
+//     return errorResponse(res, 500, "Internal server error.");
+//   }
+// }
 
 async function deletecartController(req, res) {
   try {
