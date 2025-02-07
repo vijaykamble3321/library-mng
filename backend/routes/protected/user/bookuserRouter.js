@@ -2,7 +2,10 @@ import { Router } from "express";
 import bookModel from "../../../models/bookModel.js";
 import userModel from "../../../models/userModel.js";
 import borrowModel from "../../../models/borrowModel.js";
-import { errorResponse, successResponse } from "../../../utils/serverResponse.js";
+import {
+  errorResponse,
+  successResponse,
+} from "../../../utils/serverResponse.js";
 import { authmiddleware } from "../../../utils/jwtToken.js";
 import cartModel from "../../../models/cartModel.js";
 
@@ -15,19 +18,45 @@ bookuserRouter.post("/singlebuy", authmiddleware, singlebookbuyController);
 bookuserRouter.post("/cart", authmiddleware, addToCartController);
 bookuserRouter.post("/buyall", authmiddleware, checkoutController); //buy
 bookuserRouter.delete("/deletecart", authmiddleware, deletecartController);
-// bookuserRouter.get("/detail",authmiddleware,detailController)
-
+bookuserRouter.get("/detail", authmiddleware, detailController);
 
 export default bookuserRouter;
 
-
-
-
 //detail
 
+async function detailController(req, res) {
+  try {
+    const { email } = res.locals;
 
+    const user = await userModel.findOne({ email });
+    if (!user) return errorResponse(res, 404, "User not found.");
 
+    const userId = user._id;
 
+    // Count total borrowed books
+    const totalBorrowed = await borrowModel.countDocuments({ userId });
+
+    //  Count total returned books
+    const totalReturned = await borrowModel.countDocuments({
+      userId,
+      returned: true,
+    });
+
+    //  Get currently borrowed books (not returned)
+    const currentBorrowed = await borrowModel
+      .find({ userId, returned: false })
+      .populate("bookId", "title author"); // Fetch book details (title & author)
+
+    return successResponse(res, "User borrow details fetched successfully.", {
+      totalBorrowed,
+      totalReturned,
+      currentBorrowed,
+    });
+  } catch (error) {
+    console.error("Error fetching borrow details:", error);
+    return errorResponse(res, 500, "Internal server error.");
+  }
+}
 
 async function deletecartController(req, res) {
   try {
