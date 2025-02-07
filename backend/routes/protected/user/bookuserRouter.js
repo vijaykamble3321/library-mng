@@ -15,30 +15,15 @@ bookuserRouter.post("/singlebuy", authmiddleware, singlebookbuyController);
 bookuserRouter.post("/cart", authmiddleware, addToCartController);
 bookuserRouter.post("/buyall", authmiddleware, checkoutController); //buy
 bookuserRouter.delete("/deletecart", authmiddleware, deletecartController);
-bookuserRouter.get("/detail",authmiddleware,detailController)
+// bookuserRouter.get("/detail",authmiddleware,detailController)
 
 
 export default bookuserRouter;
 
 
-async function detailController(req,res) {
-  try {
-    const { email } = res.locals;
-try {
-  
-} catch (error) {
-  
-}
-
-    
-  } catch (error) {
-    
-  }
-  
-}
 
 
-
+//detail
 
 
 
