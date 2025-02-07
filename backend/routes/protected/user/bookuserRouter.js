@@ -24,7 +24,11 @@ export default bookuserRouter;
 async function detailController(req,res) {
   try {
     const { email } = res.locals;
-
+try {
+  
+} catch (error) {
+  
+}
 
     
   } catch (error) {
