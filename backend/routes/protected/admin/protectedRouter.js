@@ -9,7 +9,7 @@ import bookuserRouter from "../user/bookuserRouter.js";
 
 const protectedRouter = Router();
 
-protectedRouter.use("/admin",isSuperAdminMiddleware, adminUserRouter);
+protectedRouter.use("/admin",isSuperAdminMiddleware,adminUserRouter);
 protectedRouter.use("/book",isSuperAdminMiddleware,adminbookRouter);
 protectedRouter.use("/user",bookuserRouter)
 
